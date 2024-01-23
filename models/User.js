@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -26,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         values: ["admin", "user"],
         allowNull: false,
         defaultValue: "user",
+      },
+      user_active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
       createdAt: {
         type: DataTypes.DATE,

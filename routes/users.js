@@ -10,4 +10,7 @@ router.get("/get-user", verifyToken, userHandler.getUser);
 router.put("/update-user/:id", verifyToken, userHandler.update);
 router.delete("/deleted-user/:id", verifyToken, userHandler.deleted);
 
+// admin
+router.post("/login-admin", userHandler.loginAdmin);
+
 module.exports = router;

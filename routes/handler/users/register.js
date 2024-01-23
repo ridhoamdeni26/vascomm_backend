@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
       username: { type: "string", min: 3, max: 255 },
       email: { type: "email", max: 255 },
       password: { type: "string", min: 6 },
+      phone: { type: "number", min: 2 },
     };
 
     const validate = v.validate(req.body, schema);
@@ -34,13 +35,28 @@ module.exports = async (req, res) => {
       });
     }
 
+    // Check Phone exists
+    const checkPhone = await User.findOne({
+      where: { phone: req.body.phone },
+    });
+
+    if (checkPhone) {
+      return res.status(409).json({
+        code: 409,
+        status: "error",
+        message: "Phone already exists",
+      });
+    }
+
     const password = await bycrpt.hash(req.body.password, 10);
 
     const data = {
       username: req.body.username,
       email: req.body.email,
       password,
+      phone: req.body.phone,
       role: "user",
+      user_active: true,
     };
 
     const createUser = await User.create(data);

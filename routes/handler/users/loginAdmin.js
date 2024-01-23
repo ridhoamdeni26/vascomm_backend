@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     passport.authenticate("oauth2");
 
     const user = await User.findOne({
-      where: { email: req.body.email, role: "user" },
+      where: { email: req.body.email, role: "admin" },
     });
 
     if (!user) {
@@ -57,7 +57,7 @@ module.exports = async (req, res) => {
     });
 
     return res.json({
-      code:200,
+      code: 200,
       status: "success",
       data: {
         id: user.id,

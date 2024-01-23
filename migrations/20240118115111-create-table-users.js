@@ -19,6 +19,11 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      phone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       password: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -29,12 +34,16 @@ module.exports = {
         defaultValue: "user",
         allowNull: false,
       },
+      user_active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
       updated_at: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE,
       },
       deleted_at: {
