@@ -4,6 +4,7 @@ const getUser = require("./getUser");
 const update = require("./update");
 const deleted = require("./delete");
 const loginAdmin = require("./loginAdmin");
+const create = require("./create");
 
 module.exports = {
   register,
@@ -12,4 +13,5 @@ module.exports = {
   update,
   deleted,
   loginAdmin,
+  create,
 };

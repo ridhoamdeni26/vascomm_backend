@@ -9,6 +9,7 @@ router.post("/login", userHandler.login);
 router.get("/get-user", verifyToken, userHandler.getUser);
 router.put("/update-user/:id", verifyToken, userHandler.update);
 router.delete("/deleted-user/:id", verifyToken, userHandler.deleted);
+router.post("/create-user", verifyToken, userHandler.create);
 
 // admin
 router.post("/login-admin", userHandler.loginAdmin);

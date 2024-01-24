@@ -7,6 +7,8 @@ module.exports = async (req, res) => {
     const schema = {
       username: { type: "string", min: 3, max: 255, optional: true },
       email: { type: "email", max: 255, optional: true },
+      role: { type: "enum", values: ["user", "admin"], optional: true },
+      user_active: { type: "boolean", optional: true },
     };
 
     const validate = v.validate(req.body, schema);
@@ -33,41 +35,59 @@ module.exports = async (req, res) => {
     }
 
     //* Check Username
-    const username = req.body.username;
-    if (username) {
-      const checkUsername = await User.findOne({
-        where: { username },
-      });
+    // const username = req.body.username;
+    // if (username) {
+    //   const checkUsername = await User.findOne({
+    //     where: { username },
+    //   });
 
-      if (checkUsername && username == user.username) {
-        return res.status(409).json({
-          code: 409,
-          status: "error",
-          message: "Username already exist",
-        });
-      }
-    }
+    //   if (checkUsername && username == user.username) {
+    //     return res.status(409).json({
+    //       code: 409,
+    //       status: "error",
+    //       message: "Username already exist",
+    //     });
+    //   }
+    // }
 
     //* Check Email
-    const email = req.body.email;
-    if (email) {
-      const checkEmail = await User.findOne({
-        where: { email },
-      });
+    // const email = req.body.email;
+    // if (email) {
+    //   const checkEmail = await User.findOne({
+    //     where: { email },
+    //   });
 
-      if (checkEmail && email == user.email) {
-        return res.status(409).json({
-          code: 409,
-          status: "error",
-          message: "Email already exist",
-        });
-      }
-    }
+    //   if (checkEmail && email == user.email) {
+    //     return res.status(409).json({
+    //       code: 409,
+    //       status: "error",
+    //       message: "Email already exist",
+    //     });
+    //   }
+    // }
+
+    //* Check Phone
+    // const phone = req.body.phone;
+    // if (phone) {
+    //   const checkPhone = await User.findOne({
+    //     where: { phone },
+    //   });
+
+    //   if (checkPhone && phone == user.phone) {
+    //     return res.status(409).json({
+    //       code: 409,
+    //       status: "error",
+    //       message: "Phone already exist",
+    //     });
+    //   }
+    // }
 
     const data = {
-      username: username,
-      email: email,
+      username: req.body.username,
+      email: req.body.email,
+      phone: req.body.phone,
       role: req.body.role,
+      user_active: req.body.user_active,
     };
 
     const updateUser = await user.update(data);
@@ -79,8 +99,10 @@ module.exports = async (req, res) => {
       data: {
         id: updateUser.id,
         username: updateUser.username,
+        phone: updateUser.phone,
         email: updateUser.email,
         role: updateUser.role,
+        user_active: updateUser.user_active,
       },
     });
   } catch (error) {

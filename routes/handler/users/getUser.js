@@ -8,9 +8,17 @@ module.exports = async (req, res) => {
     const search = req.query.search || "";
     const offset = limit * page;
     const userIds = req.query.userIds || [];
+    const isActive = req.query.isActive;
     var queryInside;
 
-    const sqlOptions = ["id", "username", "email"];
+    const sqlOptions = [
+      "id",
+      "username",
+      "email",
+      "phone",
+      "role",
+      "user_active",
+    ];
 
     // * check search Input
 
@@ -37,6 +45,20 @@ module.exports = async (req, res) => {
       };
     }
 
+    if (isActive !== undefined) {
+      if (isActive === "true") {
+        queryInside = {
+          ...queryInside,
+          user_active: true,
+        };
+      } else if (isActive === "false") {
+        queryInside = {
+          ...queryInside,
+          user_active: false,
+        };
+      }
+    }
+
     //* Total User
     const totalUser = await User.count({
       where: {
@@ -49,6 +71,7 @@ module.exports = async (req, res) => {
 
     if (page >= totalPage) {
       return res.status(404).json({
+        code: 404,
         status: "error",
         message: "No page found",
       });
